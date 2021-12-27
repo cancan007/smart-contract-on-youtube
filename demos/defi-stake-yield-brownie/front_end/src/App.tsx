@@ -1,14 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+
 import { DAppProvider, ChainId } from "@usedapp/core"
+import { Header } from './components/Header'
+import { Container } from '@material-ui/core'
+import { Main } from './components/Main'
 
 function App() {
   return (
     <DAppProvider config={{
-      supportedChains: [ChainId.Kovan, ChainId.Rinkeby]
+      supportedChains: [ChainId.Kovan],
+      notifications: {  // to check the blockchain work collectly or not
+        expirationPeriod: 1000, // 1 sec
+        checkInterval: 1000,
+      }
     }}>
-      <div>Hi!</div>
+      <Header />
+      <Container maxWidth='md'>
+        <Main />
+      </Container>
     </DAppProvider>
   );
 }
