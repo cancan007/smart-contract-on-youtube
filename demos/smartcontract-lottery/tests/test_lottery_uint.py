@@ -80,9 +80,11 @@ def test_can_pick_winner_correctly():
     starting_balance_of_account = account.balance()
     
     balance_of_lottery = lottery.balance()
+    print(f"randomness:{lottery.randomness()}")
     
     
     # 777 % 3 == 0
     assert lottery.recentWinner() == account
     assert lottery.balance() == 0
     assert account.balance() == starting_balance_of_account + balance_of_lottery
+    #assert lottery.balance() == 1

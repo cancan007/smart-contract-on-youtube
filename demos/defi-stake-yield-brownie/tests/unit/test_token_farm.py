@@ -25,16 +25,24 @@ def test_stake_tokens(amount_staked):
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         pytest.skip('Only for local testing!')
     account = get_account()
+    #p2 = get_account(index=2)
     token_farm, dapp_token = deploy_token_farm_and_dapp_token()
     # Act
+    owner_balance_before = dapp_token.balanceOf(account.address)
+    print(f"owner_balance_before:{owner_balance_before}")
     dapp_token.approve(token_farm.address, amount_staked, {'from':account})
+    #dapp_token.transfer(p2.address, amount_staked ,{'from':account})
     token_farm.stakeTokens(amount_staked, dapp_token.address, {'from':account})
+    #token_farm.stakeTokens(amount_staked, dapp_token.address, {'from':p2})
+    owner_balance_after = dapp_token.balanceOf(account.address)
+    print(f"owner_balance_after:{owner_balance_after}")
     # Assert
     assert (
         token_farm.stakingBalance(dapp_token.address, account.address) == amount_staked
     )
     assert token_farm.uniqueTokensStaked(account.address) == 1
     assert token_farm.stakers(0) == account.address
+    #assert token_farm.stakers(1) == p2.address
     return token_farm, dapp_token
 
 def test_issue_tokens(amount_staked):

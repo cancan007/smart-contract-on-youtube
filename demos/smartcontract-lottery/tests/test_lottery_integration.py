@@ -18,6 +18,8 @@ def test_can_pick_winner():
     fund_with_link(lottery)
     lottery.endLottery({'from':account})
     time.sleep(60)
+    print(lottery.randomness())
     assert lottery.recentWinner() == account
     assert lottery.balance() == 0
+    
     
